@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tool Tài Xỉu Go88 VIP</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #FFD700;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500;
+        }
+        .results {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .result-box {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            border-radius: 10px;
+            border: 2px solid #FFD700;
+            background: #111;
+            box-shadow: 0 0 10px #FFD700;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #FFD700;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #FFA500;
+        }
+        .output {
+            margin-top: 30px;
+            font-size: 24px;
+            text-shadow: 0 0 5px #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <h1>TOOL TÀI XỈU GO88 VIP</h1>
+    <div class="results" id="results"></div>
+    <div class="buttons">
+        <button onclick="addResult('T')">TÀI</button>
+        <button onclick="addResult('X')">XỈU</button>
+        <button onclick="resetResults()">RESET</button>
+    </div>
+    <div class="output" id="prediction"></div>
+
+    <script>
+        let results = [];
+
+        function addResult(val) {
+            if (results.length >= 10) {
+                alert("Đã nhập đủ 10 kết quả. Nhấn RESET để bắt đầu lại.");
+                return;
+            }
+            results.push(val);
+            updateDisplay();
+            if (results.length === 10) {
+                predictNext();
+            }
+        }
+
+        function updateDisplay() {
+            const container = document.getElementById("results");
+            container.innerHTML = '';
+            results.forEach((r, i) => {
+                const box = document.createElement("div");
+                box.className = "result-box";
+                box.innerText = r;
+                container.appendChild(box);
+            });
+        }
+
+        function resetResults() {
+            results = [];
+            document.getElementById("results").innerHTML = '';
+            document.getElementById("prediction").innerHTML = '';
+        }
+
+        function predictNext() {
+            // Phân tích cầu đơn giản
+            const counts = { T: 0, X: 0 };
+            results.forEach(r => counts[r]++);
+
+            let prediction = "Không rõ";
+            let confidence = 50;
+
+            if (results[8] === results[9]) {
+                prediction = results[9]; // cầu bệt
+                confidence = 90;
+            } else if (results[7] === results[9]) {
+                prediction = results[7]; // cầu 2-1
+                confidence = 85;
+            } else {
+                prediction = counts.T > counts.X ? "X" : "T"; // đảo nhịp
+                confidence = 70;
+            }
+
+            let msg = `<b>Dự đoán:</b> ${prediction === 'T' ? 'TÀI' : 'XỈU'} ✅<br><b>Độ tin cậy:</b> ${confidence}%`;
+
+            // Cảnh báo cầu
+            if (confidence < 80) {
+                msg += `<br><span style="color:red;">⚠️ Cảnh báo cầu đảo hoặc gãy!</span>`;
+            }
+
+            document.getElementById("prediction").innerHTML = msg;
+        }
+    </script>
+</body>
+</html>
